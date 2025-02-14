@@ -1,23 +1,34 @@
-import logo from './logo.svg';
+import React, { useState }from 'react'
 import './App.css';
+import Letter from './Letter.tsx';
 
 function App() {
+
+  const [showLetter, setShowLetter] = useState(false);
+  const [hideHeart, setHideHeart] = useState(false);
+
+  const handleHeartClick = () => {
+    setHideHeart(true); // Start disappearing animation
+
+    setTimeout(() => {
+      setShowLetter(true); // Show the letter after the heart disappears
+    }, 600); // Wait for animation to complete
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <div className='container'>
+          {!showLetter&&
+            <div 
+            className={`heart ${hideHeart ? "heart-disappear" : ""}`}
+            onClick={handleHeartClick}
+            />
+          }
+        </div>
+        {showLetter&&
+        <div>
+          <Letter/>
+        </div>
+        }
     </div>
   );
 }
